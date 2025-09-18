@@ -21,13 +21,27 @@ Un repositorio colaborativo para el examen 1 de modelos no lineales
 
 ##  Contexto
 
-La **Tasa de Interés Interbancaria de Equilibrio (TIIE)** es un indicador financiero clave publicado diariamente por el **Banco de México (Banxico)**.  
-Sirve como referencia en **créditos, derivados, bonos e instrumentos financieros**, y refleja las condiciones de liquidez y expectativas de política monetaria en México.  
+###  FIX (Tipo de Cambio FIX)
 
-El pronóstico de la TIIE es crucial porque permite:  
-- Estimar costos de financiamiento futuros.  
-- Evaluar riesgos en inversiones y créditos.  
-- Apoyar la planeación estratégica de empresas y bancos.  
+ Es un *tipo de cambio oficial* publicado por el *Banco de México*.  
+
+ Representa cuántos *pesos mexicanos equivalen a 1 dólar estadounidense (MXN/USD)*.  
+
+ Se calcula con base en operaciones del mercado cambiario en México y se publica *una vez al día*.  
+
+ *Se usa para:*  
+•⁠  ⁠Facturación oficial.  
+•⁠  ⁠Operaciones contables.  
+•⁠  ⁠Liquidaciones de comercio exterior.  
+•⁠  ⁠Referencia legal en contratos.  
+
+ Es un *dato regulado y único*, que sirve como referencia oficial en México.  
+
+---
+
+<p align="center">
+  <img src="https://monitorfinanciero.com.mx/wp-content/uploads/2024/07/Captura-de-pantalla-2024-07-11-a-las-3.41.37%E2%80%AFp.m.png" alt="" width=300/>
+</p>
 
 
 ---
@@ -36,7 +50,7 @@ El pronóstico de la TIIE es crucial porque permite:
 ##  Objetivo del Proyecto
 
 Desarrollar un **modelo SARIMA (Seasonal ARIMA)** que:  
-1. Analice el comportamiento histórico de la TIIE .  
+1. Analice el comportamiento histórico del FIX .  
 2. Identifique tendencias, estacionalidad y patrones relevantes.  
 3. Genere proyecciones confiables a corto y mediano plazo.  
 
@@ -47,7 +61,7 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 ##  Metodología
 1. **Obtención de datos**  
    - Conexión a la API de Banxico.  
-   - Limpieza y preparación de la serie temporal.  
+   - Limpieza y preparación de la serie temporal.
 
 2. **Análisis exploratorio (EDA)**  
    - Visualización de tendencias y estacionalidad.  
@@ -62,5 +76,52 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
    - Validación sobre datos de prueba.  
 
 5. **Proyección**  
-   - Forecast de la TIIE en el horizonte seleccionado.  
-   - Visualización con intervalos de confianza.  
+   - Forecast del FIX en el horizonte seleccionado.  
+   - Visualización con intervalos de confianza.
+  
+## Selección del Modelo SARIMA
+
+### 1. Elección de los órdenes (p, d, q)
+
+-   **d (diferenciación no estacional):**  
+    Se aplicaron pruebas de estacionariedad (ADF, KPSS) y análisis visual de la serie. El tipo de cambio FIX mostró tendencia en ciertos periodos, por lo que se aplicó una diferenciación para estabilizar la media.
+    
+-   **p y q (orden autorregresivo y de medias móviles):**  
+    Se utilizaron las gráficas de **Autocorrelation Function (ACF)** y **Partial Autocorrelation Function (PACF)**:
+    
+    -   Un corte significativo en el PACF sugirió un orden **p** inicial.
+        
+    -   Un corte en el ACF sugirió un orden **q** inicial.
+        
+    -   Se probaron distintas combinaciones y se seleccionó la que minimizó el criterio AIC/BIC.
+        
+
+### 2. Elección de los órdenes estacionales (P, D, Q, s)
+
+-   **s (periodicidad estacional):**  
+    Se determinó con base en la frecuencia de los datos (diarios hábiles) y en el análisis exploratorio, donde se observan patrones semanales. Se estableció `s = 5` para capturar estacionalidad semanal de días hábiles.
+    
+-   **D (diferenciación estacional):**  
+    Evaluada a partir de estacionalidad visible en la descomposición de la serie. Se aplicó diferenciación estacional solo si la serie no resultaba estacionaria tras el primer paso.
+    
+-   **P y Q (órdenes AR y MA estacionales):**  
+    Identificados mediante picos en la ACF y PACF en los rezagos múltiplos de `s`.
+    
+
+### 3. Justificación del uso de SARIMA
+
+-   El tipo de cambio FIX presenta **tendencias de largo plazo** con fluctuaciones de corto plazo.
+    
+-   Los datos muestran **patrones recurrentes de estacionalidad semanal** (ligeros cambios entre inicio y fin de semana).
+    
+-   El modelo SARIMA permite capturar:
+    
+    -   Tendencia → con diferenciación no estacional.
+        
+    -   Estacionalidad → con componentes estacionales (P, D, Q, s).
+        
+    -   Ruido y fluctuaciones → con los términos AR y MA.
+        
+
+En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó la estacionalidad semanal, lo que redujo los errores de pronóstico y mejoró el ajuste en la validación.
+
