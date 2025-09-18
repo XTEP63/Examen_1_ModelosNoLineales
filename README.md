@@ -21,11 +21,26 @@ Un repositorio colaborativo para el examen 1 de modelos no lineales
 
 ##  Contexto
 
-El tipo de cambio **FIX** es determinado por el **Banco de México** con base en un promedio de cotizaciones del mercado de cambios al mayoreo para operaciones liquidables el segundo día hábil bancario siguiente y que son obtenidas de plataformas de transacción cambiaria y otros medios electrónicos con representatividad en el mercado de cambios.
-  
+###  FIX (Tipo de Cambio FIX)
+
+ Es un *tipo de cambio oficial* publicado por el *Banco de México*.  
+
+ Representa cuántos *pesos mexicanos equivalen a 1 dólar estadounidense (MXN/USD)*.  
+
+ Se calcula con base en operaciones del mercado cambiario en México y se publica *una vez al día*.  
+
+ *Se usa para:*  
+•⁠  ⁠Facturación oficial.  
+•⁠  ⁠Operaciones contables.  
+•⁠  ⁠Liquidaciones de comercio exterior.  
+•⁠  ⁠Referencia legal en contratos.  
+
+ Es un *dato regulado y único*, que sirve como referencia oficial en México.  
+
+---
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Logobm.svg" alt="" width=300/>
+  <img src="https://monitorfinanciero.com.mx/wp-content/uploads/2024/07/Captura-de-pantalla-2024-07-11-a-las-3.41.37%E2%80%AFp.m.png" alt="" width=300/>
 </p>
 
 
@@ -35,7 +50,7 @@ El tipo de cambio **FIX** es determinado por el **Banco de México** con base en
 ##  Objetivo del Proyecto
 
 Desarrollar un **modelo SARIMA (Seasonal ARIMA)** que:  
-1. Analice el comportamiento histórico de la TIIE .  
+1. Analice el comportamiento histórico del FIX .  
 2. Identifique tendencias, estacionalidad y patrones relevantes.  
 3. Genere proyecciones confiables a corto y mediano plazo.  
 
@@ -61,7 +76,7 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
    - Validación sobre datos de prueba.  
 
 5. **Proyección**  
-   - Forecast de la TIIE en el horizonte seleccionado.  
+   - Forecast del FIX en el horizonte seleccionado.  
    - Visualización con intervalos de confianza.
   
 ## Selección del Modelo SARIMA
