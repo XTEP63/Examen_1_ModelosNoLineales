@@ -11,6 +11,14 @@ El pronóstico de la TIIE es crucial porque permite:
 - Evaluar riesgos en inversiones y créditos.  
 - Apoyar la planeación estratégica de empresas y bancos.  
 
+
+---
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-yellow.svg?logo=pandas&logoColor=white)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-SARIMA-green.svg?logo=statsmodels&logoColor=white)
+![Banxico](https://img.shields.io/badge/Data-Banxico-orange.svg?logo=google-scholar&logoColor=white)
+
 ---
 
 ##  Objetivo del Proyecto
