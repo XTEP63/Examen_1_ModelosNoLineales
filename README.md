@@ -16,7 +16,7 @@ El pronóstico de la TIIE es crucial porque permite:
 ##  Objetivo del Proyecto
 
 Desarrollar un **modelo SARIMA (Seasonal ARIMA)** que:  
-1. Analice el comportamiento histórico de la TIIE (28 días).  
+1. Analice el comportamiento histórico de la TIIE .  
 2. Identifique tendencias, estacionalidad y patrones relevantes.  
 3. Genere proyecciones confiables a corto y mediano plazo.  
 
