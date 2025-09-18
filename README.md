@@ -62,6 +62,16 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 1. **Obtención de datos**  
    - Conexión a la API de Banxico.  
    - Limpieza y preparación de la serie temporal.
+  
+    #### Ejemplo de datos (head)
+
+| Fecha       | Tipo de Cambio |
+|-------------|----------------|
+|    1991-11-12    | 3.0735         |
+|    1991-11-13    | 3.0712         |
+|    1991-11-14    | 3.0718         |
+|    1991-11-15    | 3.0684         |
+|    1991-11-18    | 3.0673         |
 
 2. **Análisis exploratorio (EDA)**  
    - Visualización de tendencias y estacionalidad.  
