@@ -75,7 +75,12 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 
 2. **Análisis exploratorio (EDA)**  
    - Visualización de tendencias y estacionalidad.  
-   - Pruebas de estacionariedad (ADF Test).  
+   - Pruebas de estacionariedad (ADF Test).
+   - Selección de los datos que se utilizarán para el modelo.
+     
+        •⁠  ⁠Se obtuvieron los registros históricos del *Tipo de Cambio FIX* directamente de la API de Banxico.  
+        •⁠  ⁠El dataset original contiene información desde *1991* hasta la fecha actual.  
+        •⁠  ⁠Para fines de modelado y evaluación, se aplicó un *filtro temporal* considerando únicamente los *últimos 5 años de observaciones*.
 
 3. **Construcción del modelo SARIMA**  
    - Identificación de parámetros (p, d, q, P, D, Q, s).  
