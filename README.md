@@ -1,6 +1,24 @@
 # Examen_1_ModelosNoLineales
 Un repositorio colaborativo para el examen 1 de modelos no lineales 
 
+---
+## Integrantes del Equipo
+
+- **Esteban Javier Verumen Nieto**  
+- **Mariana Salomé García González**  
+- **Remi Heredia Pérez**  
+- **Ivanna Camerota Curiel**  
+- **Juan Pablo Echeverría Villaseñor**
+
+---
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-yellow.svg?logo=pandas&logoColor=white)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-SARIMA-green.svg?logo=statsmodels&logoColor=white)
+![Banxico](https://img.shields.io/badge/Data-Banxico-orange.svg?logo=google-scholar&logoColor=white)
+
+---
+
 ##  Contexto
 
 La **Tasa de Interés Interbancaria de Equilibrio (TIIE)** es un indicador financiero clave publicado diariamente por el **Banco de México (Banxico)**.  
@@ -14,12 +32,6 @@ El pronóstico de la TIIE es crucial porque permite:
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-yellow.svg?logo=pandas&logoColor=white)
-![Statsmodels](https://img.shields.io/badge/Statsmodels-SARIMA-green.svg?logo=statsmodels&logoColor=white)
-![Banxico](https://img.shields.io/badge/Data-Banxico-orange.svg?logo=google-scholar&logoColor=white)
-
----
 
 ##  Objetivo del Proyecto
 
