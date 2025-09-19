@@ -63,15 +63,6 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
    - Conexión a la API de Banxico.  
    - Limpieza y preparación de la serie temporal.
   
-    #### Ejemplo de datos (head)
-
-| Fecha       | Tipo de Cambio |
-|-------------|----------------|
-|    1991-11-12    | 3.0735         |
-|    1991-11-13    | 3.0712         |
-|    1991-11-14    | 3.0718         |
-|    1991-11-15    | 3.0684         |
-|    1991-11-18    | 3.0673         |
 
 2. **Análisis exploratorio (EDA)**  
    - Visualización de tendencias y estacionalidad.  
@@ -141,46 +132,12 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó la estacionalidad semanal, lo que redujo los errores de pronóstico y mejoró el ajuste en la validación.
 
 ---
-##AQUIII
+Metodología del jupyter notebook
 ---
 
-# Examen_1_ModelosNoLineales
-Repositorio colaborativo para el Examen 1 de **Modelos No Lineales**.
-
----
-
-## 👥 Integrantes del Equipo
-- **Esteban Javier Verumen Nieto**  
-- **Mariana Salomé García González**  
-- **Remi Heredia Pérez**  
-- **Ivanna Camerota Curiel**  
-- **Juan Pablo Echeverría Villaseñor**
-
----
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-yellow.svg?logo=pandas&logoColor=white)
-![Statsmodels](https://img.shields.io/badge/Statsmodels-SARIMA-green.svg?logo=statsmodels&logoColor=white)
-![Banxico](https://img.shields.io/badge/Data-Banxico-orange.svg?logo=google-scholar&logoColor=white)
-
----
-
-## 📌 Contexto: FIX (Tipo de Cambio FIX)
-El **FIX** es el *tipo de cambio oficial* publicado por el **Banco de México**. Indica **cuántos pesos mexicanos equivalen a 1 dólar estadounidense (MXN/USD)**.  
-Se calcula con base en operaciones del mercado cambiario y se **publica una vez al día**.
-
-**Usos principales**
-- Facturación oficial  
-- Operaciones contables  
-- Liquidaciones de comercio exterior  
-- Referencia legal en contratos  
-
-> Es un dato **regulado y único** que funciona como referencia oficial en México.
-
----
-
-## 📈 Histórico de la Serie
-**Head de la serie original:**
+##  Histórico de la Serie
+A continuación se observa la serie desde 1991.  
+Notamos una **tendencia creciente de largo plazo** y choques importantes (por ejemplo, en 1994, 2008, 2020).
 
 | Fecha       | Tipo de Cambio |
 |------------:|---------------:|
@@ -190,92 +147,101 @@ Se calcula con base en operaciones del mercado cambiario y se **publica una vez 
 | 1991-11-15  | 3.0684 |
 | 1991-11-18  | 3.0673 |
 
-![Histórico](./html_files/Imagen%201.png)
+<p align="center"><img src="./Imagen 1.png" width="800"></p>
 
-**Corte 2021–Actualidad:**  
-![Corte 2021](./html_files/Imagen%202.png)
+**Corte 2021–2025:** se observa mayor volatilidad reciente, apreciaciones y depreciaciones cíclicas.  
+<p align="center"><img src="./Imagen 2.png" width="800"></p>
 
 ---
 
-## 🧹 Sustitución de días festivos y fines de semana
-Se imputaron valores de días no hábiles con el valor del día hábil anterior para evitar saltos en la serie.
+##  Limpieza de Datos
+Para evitar saltos, **días no hábiles** (festivos y fines de semana) se imputaron con el valor del día hábil previo.  
+Esto genera una serie continua y uniforme.
 
 | Fecha       | Tipo de Cambio |
 |------------:|---------------:|
-| 1991-11-12  | 3.0735 |
-| 1991-11-13  | 3.0712 |
-| 1991-11-14  | 3.0718 |
-| ...         | ... |
 | 2025-09-15  | 18.3635 |
 | 2025-09-16  | 18.3635 |
 | 2025-09-17  | 18.3257 |
 
-![Serie imputada](./html_files/Imagen%203.png)
+<p align="center"><img src="./Imagen 3.png" width="800"></p>
 
 ---
 
-## 🔀 División Train/Test
-Se realizó un split temporal dejando el tramo final para validación.
+##  División Train/Test
+Se separó un bloque final para validación.  
+Esto permite evaluar la capacidad predictiva en datos **no vistos**.
 
-| Fecha       | Tipo de Cambio |
-|------------:|---------------:|
-| 2021-01-01  | 19.9087 |
-| 2021-01-02  | 19.9087 |
-| 2021-01-03  | 19.9087 |
-| ...         | ... |
-| 2025-09-15  | 18.3635 |
-| 2025-09-16  | 18.3635 |
-| 2025-09-17  | 18.3257 |
-
-![Train/Test](./html_files/Imagen%204.png)
+<p align="center"><img src="./Imagen 4.png" width="800"></p>
 
 ---
 
-## 📊 Pruebas de Estacionariedad
-Se aplicaron pruebas **ADF** y **KPSS**:
+##  Pruebas de Estacionariedad
+Se aplicaron **ADF** y **KPSS**.  
+Resultados iniciales → serie **NO estacionaria** (tiene tendencia).  
+Aplicando **diferenciación de primer orden** (d=1) → serie estacionaria.
 
-- **ADF:** Statistic = `-1.4536`, p-value = `0.5563`  
-- **KPSS:** Statistic = `2.0326`, p-value = `0.0100`  
-**Conclusión:** La serie **NO** es estacionaria → aplicar diferenciación.
-
-**Tras diferenciación (d=1):**
-- **ADF:** Statistic = `-12.9547`, p-value = `0.0000`  
-- **KPSS:** Statistic = `0.0706`, p-value = `0.1000`  
-**Conclusión:** La serie es **estacionaria** después de 1 diferenciación.
-
----
-
-## 🪓 Descomposición STL
-![STL](./html_files/Imagen%205.png)
+| Prueba | Estadístico | p-value | Conclusión |
+|------:|-------------|--------|-----------|
+| **ADF** (sin diferencia) | -1.45 | 0.55 | No estacionaria |
+| **KPSS** (sin diferencia) | 2.03 | 0.01 | No estacionaria |
+| **ADF** (con d=1) | -12.95 | 0.0000 | Estacionaria |
+| **KPSS** (con d=1) | 0.07 | 0.10 | Estacionaria |
 
 ---
 
-## 🔎 ACF y PACF
-Se usaron para identificar p, q y componentes estacionales.
+##  Descomposición STL
+La descomposición muestra:
+- **Tendencia**: patrón de largo plazo.
+- **Estacionalidad semanal**: ligeras variaciones en días hábiles.
+- **Residuo**: componente aleatorio.
 
-![ACF/PACF](./html_files/Imagen%206.png)
+<p align="center"><img src="./Imagen 5.png" width="800"></p>
 
 ---
 
-## 🔧 Modelo SARIMA
-Parámetros seleccionados:  
+##  ACF y PACF
+El análisis de **ACF** (Autocorrelación) y **PACF** (Autocorrelación Parcial) permite elegir órdenes:
+
+- **p (AR)**: número de rezagos con autocorrelación parcial significativa.  
+- **q (MA)**: número de rezagos con autocorrelación significativa en ACF.  
+- **P, Q (estacionales)**: picos en múltiplos del período estacional `s=5` (días hábiles).
+
+**Interpretación de lags:**
+- Un **lag** representa cuántos días atrás correlaciona la serie consigo misma.  
+- ACF muestra si existe correlación global a cada lag.  
+- PACF aísla el efecto de rezagos intermedios.
+
+<p align="center"><img src="./Imagen 6.png" width="800"></p>
+
+---
+
+##  Modelo SARIMA
+Modelo final:  
 \[
-(p,d,q) = (1,1,1), \quad (P,D,Q,m) = (1,1,1,5)
+SARIMA(1,1,1)(1,1,1)_5
 \]
 
-**Resultados de error:**
-- **RAW:** RMSE = 0.1914, MAE = 0.1512  
-- **LOG:** RMSE = 0.1892, MAE = 0.1503  
-- **BOXCOX:** RMSE = 0.1805, MAE = 0.1446  
+**Explicación de parámetros:**
+- **p=1** → un término autorregresivo (inercia de un día anterior).
+- **d=1** → diferenciación de primer orden (eliminación de tendencia).
+- **q=1** → un término de medias móviles (corrección de error pasado).
+- **P=1, D=1, Q=1, s=5** → componentes estacionales para capturar el ciclo semanal (días hábiles).
 
-![Modelo](./html_files/Imagen%207.png)
-![Diagnóstico 1](./html_files/Imagen%208.png)
-![Diagnóstico 2](./html_files/Imagen%209.png)
-![Forecast](./html_files/Imagen%2010.png)
+**Errores:**
+- **RAW:** RMSE = 0.191, MAE = 0.151  
+- **LOG:** RMSE = 0.189, MAE = 0.150  
+- **BOX-COX:** RMSE = 0.181, MAE = 0.145  
+
+<p align="center"><img src="./Imagen 7.png" width="800"></p>
+<p align="center"><img src="./Imagen 8.png" width="800"></p>
+<p align="center"><img src="./Imagen 9.png" width="800"></p>
+<p align="center"><img src="./Imagen 10.png" width="800"></p>
 
 ---
 
-## 📑 Métricas Finales
+##  Métricas Finales
+Las métricas de error validan que el modelo captura correctamente tendencia y estacionalidad.
 
 | Transformación | MAPE | Accuracy | RMSE | SMAPE |
 |---------------:|-----:|--------:|-----:|------:|
@@ -283,8 +249,15 @@ Parámetros seleccionados:
 | **Logarítmica**        | 0.82% | 99.18% | 0.19 | 0.81% |
 | **Box-Cox**           | 0.79% | 99.21% | 0.18 | 0.78% |
 
-> La transformación **Box-Cox** obtuvo el mejor desempeño, con el menor error y mayor precisión.
+> **Conclusión:** La transformación **Box-Cox** ofrece la mejor precisión (menor RMSE y MAPE).
 
 ---
 
+##  Interpretación
+- El modelo explica bien el comportamiento histórico y pronostica con alta precisión.  
+- La estacionalidad semanal es clave → ignorarla empeoraría el ajuste.  
+- **Box-Cox** estabiliza varianza y mejora métricas de error.  
+- Las predicciones se ajustan al rango observado y siguen la dirección reciente del FIX.
+
+---
 
