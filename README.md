@@ -74,8 +74,8 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
         •⁠  ⁠Para fines de modelado y evaluación, se aplicó un *filtro temporal* considerando únicamente los *últimos 5 años de observaciones*.
 
 3. **Construcción del modelo SARIMA**  
-   - Identificación de parámetros (p, d, q, P, D, Q, s).  
-   - Ajuste del modelo con ``.  
+   - Identificación de parámetros (p, d, q, P, D, Q, s).
+   - Aplicacio4n de distintas transformaciones. 
 
 4. **Evaluación del modelo**  
    - Métricas: AIC, BIC, MAE, MAPE.  
