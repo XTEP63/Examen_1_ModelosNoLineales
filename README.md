@@ -75,7 +75,7 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 
 3. **Construcción del modelo SARIMA**  
    - Identificación de parámetros (p, d, q, P, D, Q, s).
-   - Aplicacio4n de distintas transformaciones. 
+   - Aplicación de distintas transformaciones. 
 
 4. **Evaluación del modelo**  
    - Métricas: AIC, BIC, MAE, MAPE.  
