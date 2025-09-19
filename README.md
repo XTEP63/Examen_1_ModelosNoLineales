@@ -144,33 +144,147 @@ En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó 
 ##AQUIII
 ---
 
-# 📊 Proyecto: Modelo SARIMA aplicado al Tipo de Cambio FIX (Banxico)
+# Examen_1_ModelosNoLineales
+Repositorio colaborativo para el Examen 1 de **Modelos No Lineales**.
 
 ---
 
-## 📌 Histórico de la serie
+## 👥 Integrantes del Equipo
+- **Esteban Javier Verumen Nieto**  
+- **Mariana Salomé García González**  
+- **Remi Heredia Pérez**  
+- **Ivanna Camerota Curiel**  
+- **Juan Pablo Echeverría Villaseñor**
 
-Ejemplo de datos:
+---
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-yellow.svg?logo=pandas&logoColor=white)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-SARIMA-green.svg?logo=statsmodels&logoColor=white)
+![Banxico](https://img.shields.io/badge/Data-Banxico-orange.svg?logo=google-scholar&logoColor=white)
+
+---
+
+## 📌 Contexto: FIX (Tipo de Cambio FIX)
+El **FIX** es el *tipo de cambio oficial* publicado por el **Banco de México**. Indica **cuántos pesos mexicanos equivalen a 1 dólar estadounidense (MXN/USD)**.  
+Se calcula con base en operaciones del mercado cambiario y se **publica una vez al día**.
+
+**Usos principales**
+- Facturación oficial  
+- Operaciones contables  
+- Liquidaciones de comercio exterior  
+- Referencia legal en contratos  
+
+> Es un dato **regulado y único** que funciona como referencia oficial en México.
+
+---
+
+## 📈 Histórico de la Serie
+**Head de la serie original:**
 
 | Fecha       | Tipo de Cambio |
-|-------------|----------------|
-| 1991-11-12  | 3.0735         |
-| 1991-11-13  | 3.0712         |
-| 1991-11-14  | 3.0718         |
-| 1991-11-15  | 3.0684         |
-| 1991-11-18  | 3.0673         |
+|------------:|---------------:|
+| 1991-11-12  | 3.0735 |
+| 1991-11-13  | 3.0712 |
+| 1991-11-14  | 3.0718 |
+| 1991-11-15  | 3.0684 |
+| 1991-11-18  | 3.0673 |
 
-![Imagen 1](html_files/Imagen%201.png)
+![Histórico](./html_files/Imagen%201.png)
 
----
-
-## 📌 Corte de 2021 – Actualidad
-
-![Imagen 2](html_files/Imagen%202.png)
+**Corte 2021–Actualidad:**  
+![Corte 2021](./html_files/Imagen%202.png)
 
 ---
 
-## 📌 Serie con sustitución de días festivos y fines de semana por valor del día anterior
+## 🧹 Sustitución de días festivos y fines de semana
+Se imputaron valores de días no hábiles con el valor del día hábil anterior para evitar saltos en la serie.
 
-****
+| Fecha       | Tipo de Cambio |
+|------------:|---------------:|
+| 1991-11-12  | 3.0735 |
+| 1991-11-13  | 3.0712 |
+| 1991-11-14  | 3.0718 |
+| ...         | ... |
+| 2025-09-15  | 18.3635 |
+| 2025-09-16  | 18.3635 |
+| 2025-09-17  | 18.3257 |
+
+![Serie imputada](./html_files/Imagen%203.png)
+
+---
+
+## 🔀 División Train/Test
+Se realizó un split temporal dejando el tramo final para validación.
+
+| Fecha       | Tipo de Cambio |
+|------------:|---------------:|
+| 2021-01-01  | 19.9087 |
+| 2021-01-02  | 19.9087 |
+| 2021-01-03  | 19.9087 |
+| ...         | ... |
+| 2025-09-15  | 18.3635 |
+| 2025-09-16  | 18.3635 |
+| 2025-09-17  | 18.3257 |
+
+![Train/Test](./html_files/Imagen%204.png)
+
+---
+
+## 📊 Pruebas de Estacionariedad
+Se aplicaron pruebas **ADF** y **KPSS**:
+
+- **ADF:** Statistic = `-1.4536`, p-value = `0.5563`  
+- **KPSS:** Statistic = `2.0326`, p-value = `0.0100`  
+**Conclusión:** La serie **NO** es estacionaria → aplicar diferenciación.
+
+**Tras diferenciación (d=1):**
+- **ADF:** Statistic = `-12.9547`, p-value = `0.0000`  
+- **KPSS:** Statistic = `0.0706`, p-value = `0.1000`  
+**Conclusión:** La serie es **estacionaria** después de 1 diferenciación.
+
+---
+
+## 🪓 Descomposición STL
+![STL](./html_files/Imagen%205.png)
+
+---
+
+## 🔎 ACF y PACF
+Se usaron para identificar p, q y componentes estacionales.
+
+![ACF/PACF](./html_files/Imagen%206.png)
+
+---
+
+## 🔧 Modelo SARIMA
+Parámetros seleccionados:  
+\[
+(p,d,q) = (1,1,1), \quad (P,D,Q,m) = (1,1,1,5)
+\]
+
+**Resultados de error:**
+- **RAW:** RMSE = 0.1914, MAE = 0.1512  
+- **LOG:** RMSE = 0.1892, MAE = 0.1503  
+- **BOXCOX:** RMSE = 0.1805, MAE = 0.1446  
+
+![Modelo](./html_files/Imagen%207.png)
+![Diagnóstico 1](./html_files/Imagen%208.png)
+![Diagnóstico 2](./html_files/Imagen%209.png)
+![Forecast](./html_files/Imagen%2010.png)
+
+---
+
+## 📑 Métricas Finales
+
+| Transformación | MAPE | Accuracy | RMSE | SMAPE |
+|---------------:|-----:|--------:|-----:|------:|
+| **Sin transformación** | 0.82% | 99.18% | 0.19 | 0.82% |
+| **Logarítmica**        | 0.82% | 99.18% | 0.19 | 0.81% |
+| **Box-Cox**           | 0.79% | 99.21% | 0.18 | 0.78% |
+
+> La transformación **Box-Cox** obtuvo el mejor desempeño, con el menor error y mayor precisión.
+
+---
+
 
