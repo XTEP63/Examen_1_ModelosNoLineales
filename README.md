@@ -63,15 +63,6 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
    - Conexión a la API de Banxico.  
    - Limpieza y preparación de la serie temporal.
   
-    #### Ejemplo de datos (head)
-
-| Fecha       | Tipo de Cambio |
-|-------------|----------------|
-|    1991-11-12    | 3.0735         |
-|    1991-11-13    | 3.0712         |
-|    1991-11-14    | 3.0718         |
-|    1991-11-15    | 3.0684         |
-|    1991-11-18    | 3.0673         |
 
 2. **Análisis exploratorio (EDA)**  
    - Visualización de tendencias y estacionalidad.  
@@ -140,3 +131,89 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 
 En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó la estacionalidad semanal, lo que redujo los errores de pronóstico y mejoró el ajuste en la validación.
 
+---
+Metodología del jupyter notebook
+---
+## 📈 Histórico de la Serie
+
+| Fecha       | Tipo de Cambio |
+|------------:|---------------:|
+| 1991-11-12  | 3.0735 |
+| 1991-11-13  | 3.0712 |
+| 1991-11-14  | 3.0718 |
+| 1991-11-15  | 3.0684 |
+| 1991-11-18  | 3.0673 |
+
+<p align="center"><img src="html_files/Imagen%201.png" width="800"></p>
+
+**Corte 2021–2025:**  
+<p align="center"><img src="html_files/Imagen%202.png" width="800"></p>
+
+---
+
+## 🧹 Limpieza de Datos
+Se imputaron valores de días no hábiles con el valor del día anterior.
+
+| Fecha       | Tipo de Cambio |
+|------------:|---------------:|
+| 2025-09-15  | 18.3635 |
+| 2025-09-16  | 18.3635 |
+| 2025-09-17  | 18.3257 |
+
+<p align="center"><img src="html_files/Imagen%203.png" width="800"></p>
+
+---
+
+## 🔀 División Train/Test
+<p align="center"><img src="html_files/Imagen%204.png" width="800"></p>
+
+---
+
+## 📊 Estacionariedad
+Se aplicaron **ADF** y **KPSS** → serie no estacionaria.  
+Después de 1 diferenciación (d=1) la serie se vuelve estacionaria.
+
+| Prueba | Estadístico | p-value | Conclusión |
+|------:|-------------|--------|-----------|
+| ADF (sin diferencia) | -1.45 | 0.55 | No estacionaria |
+| KPSS (sin diferencia) | 2.03 | 0.01 | No estacionaria |
+| ADF (d=1) | -12.95 | 0.0000 | Estacionaria |
+| KPSS (d=1) | 0.07 | 0.10 | Estacionaria |
+
+---
+
+## 🪓 Descomposición STL
+<p align="center"><img src="html_files/Imagen%205.png" width="800"></p>
+
+---
+
+## 🔎 ACF y PACF
+<p align="center"><img src="html_files/Imagen%206.png" width="800"></p>
+
+**Interpretación:**  
+- **p=1:** primer lag en PACF significativo.  
+- **q=1:** primer lag en ACF significativo.  
+- **s=5:** periodicidad semanal (días hábiles).
+
+---
+
+## 🔧 Modelo SARIMA
+\[
+SARIMA(1,1,1)(1,1,1)_5
+\]
+
+<p align="center"><img src="html_files/Imagen%207.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%208.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%209.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%2010.png" width="800"></p>
+
+---
+
+## 📑 Métricas Finales
+| Transformación | MAPE | Accuracy | RMSE | SMAPE |
+|---------------:|-----:|--------:|-----:|------:|
+| **Sin transformación** | 0.82% | 99.18% | 0.19 | 0.82% |
+| **Logarítmica**        | 0.82% | 99.18% | 0.19 | 0.81% |
+| **Box-Cox**           | 0.79% | 99.21% | 0.18 | 0.78% |
+
+> **Conclusión:** Box-Cox es la mejor transformación → menor error, mayor precisión.
