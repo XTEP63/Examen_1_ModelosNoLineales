@@ -134,10 +134,7 @@ En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó 
 ---
 Metodología del jupyter notebook
 ---
-
-##  Histórico de la Serie
-A continuación se observa la serie desde 1991.  
-Notamos una **tendencia creciente de largo plazo** y choques importantes (por ejemplo, en 1994, 2008, 2020).
+## 📈 Histórico de la Serie
 
 | Fecha       | Tipo de Cambio |
 |------------:|---------------:|
@@ -147,16 +144,15 @@ Notamos una **tendencia creciente de largo plazo** y choques importantes (por ej
 | 1991-11-15  | 3.0684 |
 | 1991-11-18  | 3.0673 |
 
-<p align="center"><img src="./Imagen 1.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%201.png" width="800"></p>
 
-**Corte 2021–2025:** se observa mayor volatilidad reciente, apreciaciones y depreciaciones cíclicas.  
-<p align="center"><img src="./Imagen 2.png" width="800"></p>
+**Corte 2021–2025:**  
+<p align="center"><img src="html_files/Imagen%202.png" width="800"></p>
 
 ---
 
-##  Limpieza de Datos
-Para evitar saltos, **días no hábiles** (festivos y fines de semana) se imputaron con el valor del día hábil previo.  
-Esto genera una serie continua y uniforme.
+## 🧹 Limpieza de Datos
+Se imputaron valores de días no hábiles con el valor del día anterior.
 
 | Fecha       | Tipo de Cambio |
 |------------:|---------------:|
@@ -164,100 +160,60 @@ Esto genera una serie continua y uniforme.
 | 2025-09-16  | 18.3635 |
 | 2025-09-17  | 18.3257 |
 
-<p align="center"><img src="./Imagen 3.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%203.png" width="800"></p>
 
 ---
 
-##  División Train/Test
-Se separó un bloque final para validación.  
-Esto permite evaluar la capacidad predictiva en datos **no vistos**.
-
-<p align="center"><img src="./Imagen 4.png" width="800"></p>
+## 🔀 División Train/Test
+<p align="center"><img src="html_files/Imagen%204.png" width="800"></p>
 
 ---
 
-##  Pruebas de Estacionariedad
-Se aplicaron **ADF** y **KPSS**.  
-Resultados iniciales → serie **NO estacionaria** (tiene tendencia).  
-Aplicando **diferenciación de primer orden** (d=1) → serie estacionaria.
+## 📊 Estacionariedad
+Se aplicaron **ADF** y **KPSS** → serie no estacionaria.  
+Después de 1 diferenciación (d=1) la serie se vuelve estacionaria.
 
 | Prueba | Estadístico | p-value | Conclusión |
 |------:|-------------|--------|-----------|
-| **ADF** (sin diferencia) | -1.45 | 0.55 | No estacionaria |
-| **KPSS** (sin diferencia) | 2.03 | 0.01 | No estacionaria |
-| **ADF** (con d=1) | -12.95 | 0.0000 | Estacionaria |
-| **KPSS** (con d=1) | 0.07 | 0.10 | Estacionaria |
+| ADF (sin diferencia) | -1.45 | 0.55 | No estacionaria |
+| KPSS (sin diferencia) | 2.03 | 0.01 | No estacionaria |
+| ADF (d=1) | -12.95 | 0.0000 | Estacionaria |
+| KPSS (d=1) | 0.07 | 0.10 | Estacionaria |
 
 ---
 
-##  Descomposición STL
-La descomposición muestra:
-- **Tendencia**: patrón de largo plazo.
-- **Estacionalidad semanal**: ligeras variaciones en días hábiles.
-- **Residuo**: componente aleatorio.
-
-<p align="center"><img src="./Imagen 5.png" width="800"></p>
+## 🪓 Descomposición STL
+<p align="center"><img src="html_files/Imagen%205.png" width="800"></p>
 
 ---
 
-##  ACF y PACF
-El análisis de **ACF** (Autocorrelación) y **PACF** (Autocorrelación Parcial) permite elegir órdenes:
+## 🔎 ACF y PACF
+<p align="center"><img src="html_files/Imagen%206.png" width="800"></p>
 
-- **p (AR)**: número de rezagos con autocorrelación parcial significativa.  
-- **q (MA)**: número de rezagos con autocorrelación significativa en ACF.  
-- **P, Q (estacionales)**: picos en múltiplos del período estacional `s=5` (días hábiles).
-
-**Interpretación de lags:**
-- Un **lag** representa cuántos días atrás correlaciona la serie consigo misma.  
-- ACF muestra si existe correlación global a cada lag.  
-- PACF aísla el efecto de rezagos intermedios.
-
-<p align="center"><img src="./Imagen 6.png" width="800"></p>
+**Interpretación:**  
+- **p=1:** primer lag en PACF significativo.  
+- **q=1:** primer lag en ACF significativo.  
+- **s=5:** periodicidad semanal (días hábiles).
 
 ---
 
-##  Modelo SARIMA
-Modelo final:  
+## 🔧 Modelo SARIMA
 \[
 SARIMA(1,1,1)(1,1,1)_5
 \]
 
-**Explicación de parámetros:**
-- **p=1** → un término autorregresivo (inercia de un día anterior).
-- **d=1** → diferenciación de primer orden (eliminación de tendencia).
-- **q=1** → un término de medias móviles (corrección de error pasado).
-- **P=1, D=1, Q=1, s=5** → componentes estacionales para capturar el ciclo semanal (días hábiles).
-
-**Errores:**
-- **RAW:** RMSE = 0.191, MAE = 0.151  
-- **LOG:** RMSE = 0.189, MAE = 0.150  
-- **BOX-COX:** RMSE = 0.181, MAE = 0.145  
-
-<p align="center"><img src="./Imagen 7.png" width="800"></p>
-<p align="center"><img src="./Imagen 8.png" width="800"></p>
-<p align="center"><img src="./Imagen 9.png" width="800"></p>
-<p align="center"><img src="./Imagen 10.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%207.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%208.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%209.png" width="800"></p>
+<p align="center"><img src="html_files/Imagen%2010.png" width="800"></p>
 
 ---
 
-##  Métricas Finales
-Las métricas de error validan que el modelo captura correctamente tendencia y estacionalidad.
-
+## 📑 Métricas Finales
 | Transformación | MAPE | Accuracy | RMSE | SMAPE |
 |---------------:|-----:|--------:|-----:|------:|
 | **Sin transformación** | 0.82% | 99.18% | 0.19 | 0.82% |
 | **Logarítmica**        | 0.82% | 99.18% | 0.19 | 0.81% |
 | **Box-Cox**           | 0.79% | 99.21% | 0.18 | 0.78% |
 
-> **Conclusión:** La transformación **Box-Cox** ofrece la mejor precisión (menor RMSE y MAPE).
-
----
-
-##  Interpretación
-- El modelo explica bien el comportamiento histórico y pronostica con alta precisión.  
-- La estacionalidad semanal es clave → ignorarla empeoraría el ajuste.  
-- **Box-Cox** estabiliza varianza y mejora métricas de error.  
-- Las predicciones se ajustan al rango observado y siguen la dirección reciente del FIX.
-
----
-
+> **Conclusión:** Box-Cox es la mejor transformación → menor error, mayor precisión.
