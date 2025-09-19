@@ -140,3 +140,37 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
 
 En comparación con un ARIMA simple, SARIMA fue más adecuado porque incorporó la estacionalidad semanal, lo que redujo los errores de pronóstico y mejoró el ajuste en la validación.
 
+---
+##AQUIII
+---
+
+# 📊 Proyecto: Modelo SARIMA aplicado al Tipo de Cambio FIX (Banxico)
+
+---
+
+## 📌 Histórico de la serie
+
+Ejemplo de datos:
+
+| Fecha       | Tipo de Cambio |
+|-------------|----------------|
+| 1991-11-12  | 3.0735         |
+| 1991-11-13  | 3.0712         |
+| 1991-11-14  | 3.0718         |
+| 1991-11-15  | 3.0684         |
+| 1991-11-18  | 3.0673         |
+
+![Imagen 1](html_files/Imagen%201.png)
+
+---
+
+## 📌 Corte de 2021 – Actualidad
+
+![Imagen 2](html_files/Imagen%202.png)
+
+---
+
+## 📌 Serie con sustitución de días festivos y fines de semana por valor del día anterior
+
+****
+
