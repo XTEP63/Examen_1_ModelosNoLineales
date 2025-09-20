@@ -74,8 +74,8 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
         •⁠  ⁠Para fines de modelado y evaluación, se aplicó un *filtro temporal* considerando únicamente los *últimos 5 años de observaciones*.
 
 3. **Construcción del modelo SARIMA**  
-   - Identificación de parámetros (p, d, q, P, D, Q, s).  
-   - Ajuste del modelo con ``.  
+   - Identificación de parámetros (p, d, q, P, D, Q, s).
+   - Aplicación de distintas transformaciones. 
 
 4. **Evaluación del modelo**  
    - Métricas: AIC, BIC, MAE, MAPE.  
@@ -97,9 +97,9 @@ Los datos se obtienen directamente desde la **API de Banxico**, garantizando **f
     
     -   Un corte significativo en el PACF sugirió un orden **p** inicial.
         
-    -   Un corte en el ACF sugirió un orden **q** inicial.
+    -   Se sugirió un orden **q** inicial debido a que se visualizaron más de 40 lags significativos, lo que podría indicar estacionalidad.
         
-    -   Se probaron distintas combinaciones y se seleccionó la que minimizó el criterio AIC/BIC.
+    -   Se probaron distintas combinaciones y se seleccionó la que minimizó el RMSE y maximizó el Accuracy del modelo.
         
 
 ### 2. Elección de los órdenes estacionales (P, D, Q, s)
@@ -205,8 +205,8 @@ SARIMA(1,1,1)(1,1,1)_5
 <p align="center"><img src="html_files/Imagen%207.png" width="800"></p>
 <p align="center"><img src="html_files/Imagen%208.png" width="800"></p>
 <p align="center"><img src="html_files/Imagen%209.png" width="800"></p>
-<p align="center"><img src="html_files/Imagen%2010.png" width="800"></p>
-
+<p align="center"><img src="html_files/comparacion.png" width="800"></p>
+ - Dada la heterocedasticidad de una serie de naturaleza estocástica como lo son las monedas de cambio, optamos por una transformación box-cox para poder estabilizar la varianza y buscar una distribución más normal de la data que tenemos.
 ---
 
 ## 📑 Métricas Finales
