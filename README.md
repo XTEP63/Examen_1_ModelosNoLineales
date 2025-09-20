@@ -207,6 +207,7 @@ SARIMA(1,1,1)(1,1,1)_5
 <p align="center"><img src="html_files/Imagen%209.png" width="800"></p>
 <p align="center"><img src="html_files/comparacion.png" width="800"></p>
  - Dada la heterocedasticidad de una serie de naturaleza estocástica como lo son las monedas de cambio, optamos por una transformación box-cox para poder estabilizar la varianza y buscar una distribución más normal de la data que tenemos.
+ 
 ---
 
 ## 📑 Métricas Finales
