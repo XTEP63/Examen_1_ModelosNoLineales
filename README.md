@@ -217,4 +217,21 @@ SARIMA(1,1,1)(1,1,1)_5
 | **Logarítmica**        | 0.82% | 99.18% | 0.19 | 0.81% |
 | **Box-Cox**           | 0.79% | 99.21% | 0.18 | 0.78% |
 
+---
+
+## 🔮 Predicciones del Modelo
+
+A continuación se muestran las **predicciones generadas con el modelo SARIMA**, comparadas contra el conjunto de prueba y visualizadas en dos versiones:  
+
+- **Figura 11:** Predicciones individuales del modelo con sus intervalos de confianza.  
+- **Figura 12:** Comparación de las tres transformaciones (Raw, Log, Box-Cox) en un mismo gráfico.
+
+## 🔮 Predicciones del Modelo
+
+<p align="center"><img src="html_files/imagen%2011.jpg" width="800"></p>
+<p align="center"><img src="html_files/Imagen%2012.jpg" width="800"></p>
+
+
+
+
 > **Conclusión:** Box-Cox es la mejor transformación → menor error, mayor precisión.
